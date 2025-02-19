@@ -1,2 +1,2 @@
-activate the venv with `source venv/bin/activate`
+activate the venv with `source nlp/bin/activate`  
 quit it with `deactivate`
