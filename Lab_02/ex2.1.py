@@ -25,8 +25,19 @@ text8: Personals Corpus
 text9: The Man Who Was Thursday by G . K . Chesterton 1908
 """
 
-# print(books.text1.name)  # Moby Dick by Herman Melville 1851
-# print(books.sent6)
+print(books.text1.name)  # Moby Dick by Herman Melville 1851
+books.sents()
+"""
+sent1: Call me Ishmael .
+sent2: The family of Dashwood had long been settled in Sussex .
+sent3: In the beginning God created the heaven and the earth .
+sent4: Fellow - Citizens of the Senate and of the House of Representatives :
+sent5: I have a problem with people PMing me to lol JOIN
+sent6: SCENE 1 : [ wind ] [ clop clop clop ] KING ARTHUR : Whoa there !
+sent7: Pierre Vinken , 61 years old , will join the board as a nonexecutive director Nov. 29 .
+sent8: 25 SEXY MALE , seeks attrac older single lady , for discreet encounters .
+sent9: THE suburb of Saffron Park lay on the sunset side of London , as red and ragged as a cloud of sunset .
+"""
 
 books.text3.concordance("thou")
 """ 
