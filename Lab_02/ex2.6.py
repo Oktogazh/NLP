@@ -2,6 +2,8 @@ import nltk
 
 sentences = """
 Throughout history, never has the USA seen such an incompetent administration.
+Throughout history, never has the USA seen such an incompetent Administration.
+Throughout history, never has the USA seen such an Incompetent administration.
 The 47th president Donald Duck's impredictability is only surpassed by his amateurism.
 The only thing the king of D.C. is ruining faster than the American credibility is the American economy.
 Since January, the stock exchange market seems to reach new low every hour.
@@ -30,6 +32,34 @@ for sentence in cleaned_sentences:
   such/PDT
   an/DT
   incompetent/JJ
+  administration/NN
+  ./.)
+(S
+  Throughout/IN
+  history/NN
+  ,/,
+  never/RB
+  has/VBZ
+  the/DT
+  (ORGANIZATION USA/NNP)
+  seen/VBN
+  such/PDT
+  an/DT
+  incompetent/JJ
+  (ORGANIZATION Administration/NN)
+  ./.)
+(S
+  Throughout/IN
+  history/NN
+  ,/,
+  never/RB
+  has/VBZ
+  the/DT
+  (ORGANIZATION USA/NNP)
+  seen/VBN
+  such/PDT
+  an/DT
+  Incompetent/NNP
   administration/NN
   ./.)
 (S
