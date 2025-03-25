@@ -1,6 +1,9 @@
 # import libraries
 import pandas as pd
+import numpy as np
 import nltk
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 
 # need to download nltk corpus first (one time only)
 #
@@ -15,6 +18,9 @@ from nltk.stem import WordNetLemmatizer
 # df = pd.read_csv ('https://raw.githubusercontent.com/pycaret/pycaret/master/datasets/amazon.csv')
 # Load a smaller sample of the amazon reviews instead
 df = pd.read_csv("amazon.csv")
+
+df = df.sample(frac=0.1, random_state=8)
+
 print(df)
 
 
@@ -36,7 +42,6 @@ def preprocess_text(text):
 
 # apply the function df
 df["reviewText"] = df["reviewText"].apply(preprocess_text)
-print(df)
 
 nltk.download("vader_lexicon")
 
@@ -51,15 +56,17 @@ def get_sentiment(text):
     return sentiment
 
 
-# apply get_sentiment function
-df["sentiment"] = df["reviewText"].apply(get_sentiment)
-print(df)
+print("spliting")
+sets = np.split(
+    df,
+    [1000],
+)
 
-from sklearn.metrics import confusion_matrix
+for set in sets:
+    # apply get_sentiment function
+    set["sentiment"] = set["reviewText"].apply(get_sentiment)
+    print(set)
 
-# Thus in binary classification, the count of true negatives is C_{0,0}, false negatives is C_{1,0}, true positives is C_{1,1} and false positives is C_{0,1}.
-print(confusion_matrix(df["Positive"], df["sentiment"]))
+    print(confusion_matrix(set["Positive"], set["sentiment"]))
 
-from sklearn.metrics import classification_report
-
-print(classification_report(df["Positive"], df["sentiment"]))
+    print(classification_report(set["Positive"], set["sentiment"]))
