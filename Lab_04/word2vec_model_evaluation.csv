@@ -1,0 +1,7 @@
+,Model,Test Words,Cosine Similarity
+0,word2vec.model,"('stir', 'whisk')",0.66465074
+1,word2vec.model,"('cream', 'milk')",0.9253601
+2,word2vec.model,"('cake', 'muffin')",0.540201
+3,word2vec.model,"('jam', 'jelly')",0.8087435
+4,word2vec.model,"('reserve', 'save')",0.95402753
+5,word2vec.model,"('bake', 'cook')",0.6010543
