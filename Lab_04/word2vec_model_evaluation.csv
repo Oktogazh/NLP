@@ -5,3 +5,7 @@
 3,word2vec.model,"('jam', 'jelly')",0.8087435
 4,word2vec.model,"('reserve', 'save')",0.95402753
 5,word2vec.model,"('bake', 'cook')",0.6010543
+6,word2vec.model,"('wine', 'vinegar')",0.8828826
+7,word2vec.model,"('chop', 'dice')",0.7124587
+8,word2vec.model,"('sugar', 'molasses')",0.7795906
+9,word2vec.model,"('wheat', 'rice')",0.81702924
