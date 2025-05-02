@@ -1,5 +1,6 @@
 ﻿import re
 import string
+from gensim.models import Word2Vec
 
 with open("Breton_text.txt", "r", encoding="utf-8-sig") as file1:
     breton = file1.read().replace("\n", " ")
@@ -36,6 +37,14 @@ def clean_text(text):
     # lower case
     tokens = re.split(r"[\s\n.–]+", text.replace("—", " ").replace("c'h", "cvvh"))
     tokens = [t.lower() for t in tokens]
+    tokens = [
+        (
+            t[2:]
+            if len(t) > 2 and t[1] == "'" and (t[2] in "eaiou" or t[0] in "lmtdjs")
+            else t
+        )
+        for t in tokens
+    ]
 
     # remove punctuation using regular expressions
     # this line of code locates the punctuation within the given text and compiles that punctuation into a single variable
@@ -59,4 +68,17 @@ for x in french_segments:
 print(clean_breton_segments[:3])
 print(clean_french_segments[:3])
 # [['paol', 'emañ', 'ho', 'koan', 'war', 'an', 'daol'], ['deuit', 'da', 'zebriñ', 'ho', 'koan'], ['kleier', 'karmez', 'o', 'doa', 'sonet', 'an', 'anjeluz']]
-# [['paol', 'votre', 'dîner', 'est', 'sur', 'la', 'table'], ['les', 'cloches', 'des', 'carmes', 'avaient', 'sonné', 'langélus'], ['la', 'paix', 'du', 'soir', 'sépandait', 'sur', 'la', 'ville']]
+# [['paol', 'votre', 'dîner', 'est', 'sur', 'la', 'table'], ['les', 'cloches', 'des', 'carmes', 'avaient', 'sonné', 'angélus'], ['la', 'paix', 'du', 'soir', 'épandait', 'sur', 'la', 'ville']]
+
+
+# Train Word2Vec model for Breton
+breton_model = Word2Vec(
+    sentences=clean_breton_segments, vector_size=128, window=5, min_count=3
+)
+breton_model.save("breton_word2vec.model")
+
+# Train Word2Vec model for French
+french_model = Word2Vec(
+    sentences=clean_french_segments, vector_size=128, window=5, min_count=3
+)
+french_model.save("french_word2vec.model")
