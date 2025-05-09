@@ -1,5 +1,6 @@
 ﻿import re
 import string
+import json
 from gensim.models import Word2Vec
 
 with open("Breton_text.txt", "r", encoding="utf-8-sig") as file1:
@@ -73,12 +74,51 @@ print(clean_french_segments[:3])
 
 # Train Word2Vec model for Breton
 breton_model = Word2Vec(
-    sentences=clean_breton_segments, vector_size=128, window=5, min_count=3
+    sentences=clean_breton_segments,
+    vector_size=64,
+    window=4,
+    epochs=200,
+    min_count=2,
+    sg=1,
 )
 breton_model.save("breton_word2vec.model")
 
 # Train Word2Vec model for French
 french_model = Word2Vec(
-    sentences=clean_french_segments, vector_size=128, window=5, min_count=3
+    sentences=clean_french_segments,
+    vector_size=64,
+    window=4,
+    epochs=50,
+    min_count=3,
+    sg=1,
 )
 french_model.save("french_word2vec.model")
+
+print(
+    json.dumps(
+        breton_model.wv.most_similar("skleur", topn=7),
+        indent=4,
+        ensure_ascii=False,
+    )
+)
+print(
+    json.dumps(
+        french_model.wv.most_similar("mer", topn=5), indent=4, ensure_ascii=False
+    )
+)
+
+# Save Breton embeddings a format that MUSE can read
+with open("breton_embeddings.txt", "w", encoding="utf-8") as f:
+    f.write(f"{len(breton_model.wv.key_to_index)} {breton_model.vector_size}\n")
+    for word in breton_model.wv.key_to_index:
+        vector = breton_model.wv[word]
+        vector_str = " ".join(map(str, vector))
+        f.write(f"{word} {vector_str}\n")
+
+# Save French embeddings a format that MUSE can read
+with open("french_embeddings.txt", "w", encoding="utf-8") as f:
+    f.write(f"{len(french_model.wv.key_to_index)} {french_model.vector_size}\n")
+    for word in french_model.wv.key_to_index:
+        vector = french_model.wv[word]
+        vector_str = " ".join(map(str, vector))
+        f.write(f"{word} {vector_str}\n")
